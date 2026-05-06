@@ -3,7 +3,7 @@ import {
   HOME_FACTOR,
   INCOME_TOPS,
   PROFILES,
-  SPEND_TOPS,
+  SPEND_AMOUNT_BRL,
 } from "./questionnaire";
 import { HENRIQUE_BASELINE } from "./scenarios";
 import type {
@@ -189,7 +189,7 @@ function routeProfile(a: AnswerSet): ProfileId {
             : "unknown";
   const assets = ASSETS_AMOUNT_BRL[a.assets];
   const income = INCOME_TOPS[a.income];
-  const spending = SPEND_TOPS[a.spending] * 12;
+  const spending = SPEND_AMOUNT_BRL[a.spending] * 12;
   const savingsRate = income > 0 ? (income - spending) / income : 0;
 
   if (a.lifeEvent.includes("new_child") || a.dependents >= 2) return "family_foundation";
@@ -267,9 +267,8 @@ export function computeAllocation(a: AnswerSet, totalAssetsBrlOverride?: number)
   const profile: Profile = PROFILES[profileId];
 
   const totalAssetsBrl = totalAssetsBrlOverride ?? ASSETS_AMOUNT_BRL[a.assets];
-  const monthlySpending = SPEND_TOPS[a.spending];
+  const essentialMonthly = SPEND_AMOUNT_BRL[a.spending];
   const annualIncome = INCOME_TOPS[a.income];
-  const essentialMonthly = monthlySpending * 0.7;
   const buffer = reserveBufferMonths(a);
   const liquidityReserveBrl = essentialMonthly * buffer;
 
@@ -365,9 +364,13 @@ export function computeAllocation(a: AnswerSet, totalAssetsBrlOverride?: number)
   const flagsList = modifiers
     .map((m) => (m.flag ? { id: m.id, label: m.flag.label, note: m.flag.note } : null))
     .filter((f): f is { id: string; label: string; note: string } => Boolean(f));
+  // Savings rate uses essential annual spending as a floor for spending.
+  // Real total spending is higher (essential plus discretionary), so this
+  // is an upper bound on savings rate, but it preserves the directional
+  // signal we use for the high_savings_rate flag.
   const savingsRate =
     annualIncome > 0
-      ? (annualIncome - monthlySpending * 12) / annualIncome
+      ? (annualIncome - essentialMonthly * 12) / annualIncome
       : 0;
   if (savingsRate > 0.4) {
     flagsList.push({
@@ -417,7 +420,7 @@ export function computeAllocation(a: AnswerSet, totalAssetsBrlOverride?: number)
       ? "We held to the 6-month base."
       : `Starting from a 6-month base: ${reserveDrivers.join(", ")}.`;
 
-  const reserveMemo = `${reservePct.toFixed(1)}% of your assets covers ${buffer} months of essential household costs (about 70% of your total spending: housing, school, healthcare, basic transport). ${driverSentence} Travel, leisure, and lifestyle (around 30% of spending) aren't held in reserve, since they can pause during a tough month.`;
+  const reserveMemo = `${reservePct.toFixed(1)}% of your assets covers ${buffer} months of your fixed monthly expenses (rent, utilities, food, school, healthcare, basic transport). ${driverSentence} Discretionary spending — travel, leisure, lifestyle — isn't held in reserve, since it can pause during a tough month.`;
 
   const memo = {
     profile: `You are a ${profile.label.toLowerCase()} investor. ${profile.blurb}`,

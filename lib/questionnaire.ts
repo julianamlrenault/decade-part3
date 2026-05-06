@@ -28,12 +28,16 @@ export const ASSETS_AMOUNT_BRL: Record<AssetsBand, number> = {
   gt_5M: 5_000_000,
 };
 
-export const SPEND_TOPS: Record<SpendBand, number> = {
+// Spending bands now represent ESSENTIAL fixed expenses only (rent, utilities,
+// food, school, healthcare, basic transport — things that can't be paused).
+// We use the LOWER edge of each band so picking "R$ 30k – 50k" means the
+// engine reads R$ 30k. Aligns with how the assets bands work.
+export const SPEND_AMOUNT_BRL: Record<SpendBand, number> = {
   lt_15k: 15_000,
-  "15k_30k": 30_000,
-  "30k_50k": 50_000,
-  "50k_80k": 80_000,
-  gt_80k: 120_000,
+  "15k_30k": 15_000,
+  "30k_50k": 30_000,
+  "50k_80k": 50_000,
+  gt_80k: 80_000,
 };
 
 export const PROFILES: Record<ProfileId, Profile> = {

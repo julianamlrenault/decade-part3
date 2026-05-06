@@ -260,13 +260,14 @@ export default function InterviewFlow({
           progress={progress}
           stepLabel={stepLabel}
           title="What's your annual household income, and how predictable is it?"
+          helper="We use net income (after taxes) since that's what you actually live on and save from."
           onContinue={advance}
           onBack={goBack}
         >
           <div className="space-y-6 mt-2">
             <div>
               <div className="eyebrow text-[var(--text-muted)] mb-3">
-                Combined gross income
+                Combined annual net income (after taxes)
               </div>
               <div className="space-y-2">
                 {(
@@ -361,8 +362,8 @@ export default function InterviewFlow({
         <QuestionScreen
           progress={progress}
           stepLabel={stepLabel}
-          title="What's your typical monthly spending?"
-          helper="Total for the household, all-in: housing, school, healthcare, transport, leisure. A normal month — not last December."
+          title="What are your fixed monthly expenses?"
+          helper="The things you can't cut quickly: rent or financing, utilities, food, school, healthcare, basic transport. Excludes travel, leisure, and discretionary spending — those don't need to be held in reserve."
           options={opts}
           selected={answers.spending}
           onSelect={(id) => set({ spending: id as SpendBand })}
@@ -474,16 +475,17 @@ export default function InterviewFlow({
     case "q9": {
       const opts: OptionCard[] = (
         [
-          ["brazil_focused", "Not a priority", "Keep it Brazil-focused"],
-          ["meaningful", "Meaningful", "Real USD diversification matters"],
-          ["essential", "Essential", "Significant USD weighting from the start"],
+          ["brazil_focused", "Keep it minimal", "Mostly BRL, USD only as a small hedge"],
+          ["meaningful", "Meaningful exposure", "A real USD allocation, not a token slice"],
+          ["essential", "Significant weighting", "USD as a core anchor, alongside Brazil"],
         ] as [Intl, string, string][]
       ).map(([id, title, helper]) => ({ id, title, helper }));
       return (
         <QuestionScreen
           progress={progress}
           stepLabel={stepLabel}
-          title="How important is international diversification to you?"
+          title="When we build your portfolio, how much should be in USD-denominated assets?"
+          helper="Brazilian markets are heavily concentrated in commodities, banks, and a few utilities. USD assets give exposure to global tech, healthcare, and consumer companies that aren't well represented on B3."
           options={opts}
           selected={answers.intl}
           onSelect={(id) => set({ intl: id as Intl })}
