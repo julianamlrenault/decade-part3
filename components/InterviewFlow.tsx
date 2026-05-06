@@ -297,7 +297,7 @@ export default function InterviewFlow({
                 {(
                   [
                     ["all_stable", "All stable", "CLT or fixed salary, predictable month to month"],
-                    ["partial_variable", "Stable plus partial variable", "Bonus or commission under 30% of total"],
+                    ["partial_variable", "Stable plus partial variable", "Bonus or commission under 40% of total"],
                     ["highly_variable", "Highly variable", "Most income from bonus or commission"],
                     ["self_employed", "Self-employed / business owner", "Income depends on business performance"],
                   ] as [Stability, string, string][]
@@ -327,8 +327,9 @@ export default function InterviewFlow({
         [
           ["lt_500k", "Less than R$ 500k"],
           ["500k_1M", "R$ 500k – 1M"],
-          ["1M_2M", "R$ 1M – 2M"],
-          ["2M_5M", "R$ 2M – 5M"],
+          ["1M_1_9M", "R$ 1M – 1.9M"],
+          ["2M_2_9M", "R$ 2M – 2.9M"],
+          ["3M_4_9M", "R$ 3M – 4.9M"],
           ["gt_5M", "R$ 5M and above"],
         ] as [AssetsBand, string][]
       ).map(([id, title]) => ({ id, title }));
@@ -378,7 +379,6 @@ export default function InterviewFlow({
           ["education_funding", "Fund children's education"],
           ["career_break", "Career break or business venture"],
           ["early_retirement", "Plan for early retirement"],
-          ["international_relocation", "International relocation"],
           ["wealth_transfer", "Wealth transfer to next generation"],
         ] as [HorizonItem, string][]
       ).map(([id, title]) => ({ id, title }));

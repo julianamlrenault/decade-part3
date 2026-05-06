@@ -15,12 +15,17 @@ export const INCOME_TOPS: Record<IncomeBand, number> = {
   gt_2M: 3_000_000,
 };
 
-export const ASSETS_TOPS: Record<AssetsBand, number> = {
+// For asset ranges we use the LOWER edge of the band, so a user who picks
+// "R$ 2M – 2.9M" sees the engine compute against R$ 2M (matching the case
+// brief's Henrique exactly). Top-of-band is reserved for income and spending,
+// where it acts as a conservative cushion.
+export const ASSETS_AMOUNT_BRL: Record<AssetsBand, number> = {
   lt_500k: 500_000,
-  "500k_1M": 1_000_000,
-  "1M_2M": 2_000_000,
-  "2M_5M": 5_000_000,
-  gt_5M: 8_000_000,
+  "500k_1M": 500_000,
+  "1M_1_9M": 1_000_000,
+  "2M_2_9M": 2_000_000,
+  "3M_4_9M": 3_000_000,
+  gt_5M: 5_000_000,
 };
 
 export const SPEND_TOPS: Record<SpendBand, number> = {

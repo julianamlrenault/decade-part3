@@ -1,5 +1,5 @@
 import {
-  ASSETS_TOPS,
+  ASSETS_AMOUNT_BRL,
   HOME_FACTOR,
   INCOME_TOPS,
   PROFILES,
@@ -187,7 +187,7 @@ function routeProfile(a: AnswerSet): ProfileId {
           : a.drawdownReaction === "buy_more"
             ? "high"
             : "unknown";
-  const assets = ASSETS_TOPS[a.assets];
+  const assets = ASSETS_AMOUNT_BRL[a.assets];
   const income = INCOME_TOPS[a.income];
   const spending = SPEND_TOPS[a.spending] * 12;
   const savingsRate = income > 0 ? (income - spending) / income : 0;
@@ -266,7 +266,7 @@ export function computeAllocation(a: AnswerSet, totalAssetsBrlOverride?: number)
   const profileId = routeProfile(a);
   const profile: Profile = PROFILES[profileId];
 
-  const totalAssetsBrl = totalAssetsBrlOverride ?? ASSETS_TOPS[a.assets];
+  const totalAssetsBrl = totalAssetsBrlOverride ?? ASSETS_AMOUNT_BRL[a.assets];
   const monthlySpending = SPEND_TOPS[a.spending];
   const annualIncome = INCOME_TOPS[a.income];
   const essentialMonthly = monthlySpending * 0.7;

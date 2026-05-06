@@ -107,8 +107,8 @@ ans = { ...ans, lifeEvent: ["new_child"] };
 ans = { ...ans, income: "1M_2M" };
 ans = { ...ans, stability: "partial_variable" };
 
-// Q3 — assets
-ans = { ...ans, assets: "1M_2M" };
+// Q3 — assets (new band structure: R$2M lower edge of "R$ 2M – 2.9M")
+ans = { ...ans, assets: "2M_2_9M" };
 
 // Q4 — spending
 ans = { ...ans, spending: "30k_50k" };

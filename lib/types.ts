@@ -8,8 +8,9 @@ export type IncomeBand =
 export type AssetsBand =
   | "lt_500k"
   | "500k_1M"
-  | "1M_2M"
-  | "2M_5M"
+  | "1M_1_9M"
+  | "2M_2_9M"
+  | "3M_4_9M"
   | "gt_5M";
 
 export type SpendBand =
@@ -39,7 +40,6 @@ export type HorizonItem =
   | "education_funding"
   | "career_break"
   | "early_retirement"
-  | "international_relocation"
   | "wealth_transfer"
   | "none";
 

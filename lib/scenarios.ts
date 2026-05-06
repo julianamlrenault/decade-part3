@@ -28,7 +28,7 @@ export const HENRIQUE_BASELINE: AnswerSet = {
   spouseIsCLT: true,
   spouseAnnualCLT: 480_000,
   stability: "partial_variable",
-  assets: "1M_2M",
+  assets: "2M_2_9M",
   spending: "30k_50k",
   horizon: ["buy_home", "expand_family", "education_funding"],
   homeTiming: "exploring",
