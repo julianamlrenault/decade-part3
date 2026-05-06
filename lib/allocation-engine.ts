@@ -403,9 +403,26 @@ export function computeAllocation(a: AnswerSet, totalAssetsBrlOverride?: number)
   if (filters.includes("hedged_intl_only")) exclusionLines.push("Hedged USD only; no leveraged international.");
   if (!a.horizon.includes("buy_home")) exclusionLines.push("No home bucket (no near-term home plan).");
 
+  const reserveDrivers: string[] = [];
+  if (a.stability === "partial_variable") reserveDrivers.push("+3 months because your income has a partial variable component");
+  if (a.stability === "highly_variable" || a.stability === "self_employed")
+    reserveDrivers.push("+6 months because your income is highly variable or self-employed");
+  if (a.lifeEvent.includes("new_child"))
+    reserveDrivers.push("+3 months for the new child arriving in the next 12 months");
+  if (a.spouseIsCLT && a.stability === "all_stable")
+    reserveDrivers.push("-2 months because both incomes are stable CLT");
+
+  const driverSentence =
+    reserveDrivers.length === 0
+      ? "We held to the 6-month base."
+      : `Starting from a 6-month base: ${reserveDrivers.join(", ")}.`;
+
+  const reserveMemo = `${reservePct.toFixed(1)}% of your assets covers ${buffer} months of essential household costs (about 70% of your total spending: housing, school, healthcare, basic transport). ${driverSentence} Travel, leisure, and lifestyle (around 30% of spending) aren't held in reserve, since they can pause during a tough month.`;
+
   const memo = {
     profile: `You are a ${profile.label.toLowerCase()} investor. ${profile.blurb}`,
     shape: `${protective.toFixed(1)}% in protective buckets (Reserve + Home), ${incomeFI.toFixed(1)}% in income / inflation, ${longTerm.toFixed(1)}% in growth / global. Designed to make you investable again before optimizing returns.`,
+    reserve: reserveMemo,
     decisions: topModifiers || "Default profile shape applied with no overriding modifiers.",
     exclusions: exclusionLines.length > 0 ? exclusionLines.join(" ") : "No product filters were triggered.",
   };

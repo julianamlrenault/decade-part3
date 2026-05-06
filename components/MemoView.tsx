@@ -14,6 +14,7 @@ export default function MemoView({ result }: { result: AllocationResult }) {
       <div className="space-y-5 text-[14.5px] leading-relaxed text-[var(--text)]">
         <Block label="Profile" body={result.memo.profile} />
         <Block label="Portfolio shape" body={result.memo.shape} />
+        <Block label="Reserve sizing" body={result.memo.reserve} />
         <Block
           label="Decisions that shaped this allocation"
           body={result.memo.decisions}

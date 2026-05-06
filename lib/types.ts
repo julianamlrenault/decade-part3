@@ -140,6 +140,12 @@ export interface AllocationResult {
   activeModifiers: { id: string; label: string; effect: string }[];
   flags: { id: string; label: string; note: string }[];
   filters: string[];
-  memo: { profile: string; shape: string; decisions: string; exclusions: string };
+  memo: {
+    profile: string;
+    shape: string;
+    reserve: string;
+    decisions: string;
+    exclusions: string;
+  };
   deltaFromBaseline: { id: BucketId; label: string; deltaPct: number }[];
 }
