@@ -1,9 +1,65 @@
 "use client";
 
 import { ArrowRight, Flag } from "lucide-react";
-import type { AllocationResult } from "../lib/types";
+import type { AllocationResult, UserInfo } from "../lib/types";
 
-export default function MemoView({ result }: { result: AllocationResult }) {
+const BANKER_EMAIL = "juliana.mlrenault@gmail.com";
+
+function formatBrl(n: number) {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: 0,
+  }).format(n);
+}
+
+function buildMailto(result: AllocationResult, userInfo: UserInfo | null) {
+  const name = userInfo?.name ?? "(name not provided)";
+  const subject = `Decade — Suitability result for ${name}`;
+  const lines = [
+    "Hello,",
+    "",
+    "I just completed the Decade AI suitability interview and would like to discuss my recommended portfolio.",
+    "",
+    "--- My contact information ---",
+    `Name:  ${userInfo?.name ?? "(not provided)"}`,
+    `Email: ${userInfo?.email ?? "(not provided)"}`,
+    `Phone: ${userInfo?.phone ?? "(not provided)"}`,
+    "",
+    "--- My suitability result ---",
+    `Profile:      ${result.profile.label}`,
+    `Total assets: ${formatBrl(result.totalAssetsBrl)}`,
+    "",
+    "Allocation:",
+    ...result.buckets
+      .filter((b) => b.pct > 0)
+      .map((b) => `  - ${b.label}: ${b.pct.toFixed(1)}% (${formatBrl(b.amountBrl)})`),
+  ];
+
+  if (result.flags.length > 0) {
+    lines.push("", "Flags for banker conversation:");
+    for (const f of result.flags) {
+      lines.push(`  - ${f.label}: ${f.note}`);
+    }
+  }
+
+  lines.push("", "Looking forward to hearing from you.", "");
+
+  const body = lines.join("\n");
+  return `mailto:${BANKER_EMAIL}?subject=${encodeURIComponent(
+    subject,
+  )}&body=${encodeURIComponent(body)}`;
+}
+
+export default function MemoView({
+  result,
+  userInfo,
+}: {
+  result: AllocationResult;
+  userInfo: UserInfo | null;
+}) {
+  const mailtoHref = buildMailto(result, userInfo);
+
   return (
     <div className="space-y-6">
       <div>
@@ -45,10 +101,13 @@ export default function MemoView({ result }: { result: AllocationResult }) {
       )}
 
       <div className="border-t border-[var(--line)] pt-6">
-        <button className="inline-flex items-center gap-2 text-[13px] border border-[var(--line-strong)] rounded-full px-4 py-2.5 text-[var(--text)] hover:bg-[var(--surface-soft)] transition">
+        <a
+          href={mailtoHref}
+          className="inline-flex items-center gap-2 text-[13px] border border-[var(--line-strong)] rounded-full px-4 py-2.5 text-[var(--text)] hover:bg-[var(--surface-soft)] transition"
+        >
           Discuss this with a Decade banker
           <ArrowRight className="w-3.5 h-3.5" />
-        </button>
+        </a>
       </div>
     </div>
   );

@@ -5,12 +5,13 @@ import { useState } from "react";
 import AllocationOutput from "./AllocationOutput";
 import MemoView from "./MemoView";
 import TransitionView from "./TransitionView";
-import type { AllocationResult } from "../lib/types";
+import type { AllocationResult, UserInfo } from "../lib/types";
 
 type Tab = "portfolio" | "memo" | "transition";
 
 interface Props {
   result: AllocationResult;
+  userInfo: UserInfo | null;
   baselineDelta: boolean;
   onReview: () => void;
   onRestart: () => void;
@@ -18,6 +19,7 @@ interface Props {
 
 export default function ResultsView({
   result,
+  userInfo,
   baselineDelta,
   onReview,
   onRestart,
@@ -61,7 +63,7 @@ export default function ResultsView({
             {tab === "portfolio" && (
               <AllocationOutput result={result} baselineDelta={baselineDelta} />
             )}
-            {tab === "memo" && <MemoView result={result} />}
+            {tab === "memo" && <MemoView result={result} userInfo={userInfo} />}
             {tab === "transition" && <TransitionView result={result} />}
           </div>
 

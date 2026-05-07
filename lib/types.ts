@@ -1,3 +1,9 @@
+export interface UserInfo {
+  name: string;
+  email: string;
+  phone: string;
+}
+
 export type IncomeBand =
   | "lt_200k"
   | "200k_500k"

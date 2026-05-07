@@ -12,7 +12,7 @@ import {
   HENRIQUE_BASELINE,
   SCENARIOS,
 } from "../lib/scenarios";
-import type { AnswerSet } from "../lib/types";
+import type { AnswerSet, UserInfo } from "../lib/types";
 
 type Mode = "intro" | "interview" | "reveal" | "results";
 
@@ -20,6 +20,7 @@ export default function Home() {
   const [mode, setMode] = useState<Mode>("intro");
   const [answers, setAnswers] = useState<AnswerSet>(DEFAULT_ANSWERS);
   const [scenarioId, setScenarioId] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   const result = useMemo(() => computeAllocation(answers), [answers]);
   const isHenriqueBaseline = useMemo(
@@ -29,7 +30,8 @@ export default function Home() {
     [answers, scenarioId],
   );
 
-  function handleStart() {
+  function handleStart(info: UserInfo) {
+    setUserInfo(info);
     setMode("interview");
   }
   function handleInterviewComplete() {
@@ -44,6 +46,7 @@ export default function Home() {
   function handleRestart() {
     setAnswers(DEFAULT_ANSWERS);
     setScenarioId(null);
+    setUserInfo(null);
     setMode("intro");
   }
   function handlePickScenario(id: string) {
@@ -74,6 +77,7 @@ export default function Home() {
       {mode === "results" && (
         <ResultsView
           result={result}
+          userInfo={userInfo}
           baselineDelta={!isHenriqueBaseline}
           onReview={handleReviewAnswers}
           onRestart={handleRestart}
