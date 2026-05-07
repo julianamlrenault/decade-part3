@@ -349,27 +349,68 @@ export default function InterviewFlow({
       );
     }
     case "q4": {
-      const opts: OptionCard[] = (
-        [
-          ["lt_15k", "Less than R$ 15k"],
-          ["15k_30k", "R$ 15k – 30k"],
-          ["30k_50k", "R$ 30k – 50k"],
-          ["50k_80k", "R$ 50k – 80k"],
-          ["gt_80k", "R$ 80k and above"],
-        ] as [SpendBand, string][]
-      ).map(([id, title]) => ({ id, title }));
+      const spendBands: [SpendBand, string][] = [
+        ["lt_15k", "Less than R$ 15k"],
+        ["15k_30k", "R$ 15k – 30k"],
+        ["30k_50k", "R$ 30k – 50k"],
+        ["50k_80k", "R$ 50k – 80k"],
+        ["gt_80k", "R$ 80k and above"],
+      ];
       return (
         <QuestionScreen
           progress={progress}
           stepLabel={stepLabel}
-          title="What are your fixed monthly expenses?"
-          helper="The things you can't cut quickly: rent or financing, utilities, food, school, healthcare, basic transport. Excludes travel, leisure, and discretionary spending — those don't need to be held in reserve."
-          options={opts}
-          selected={answers.spending}
-          onSelect={(id) => set({ spending: id as SpendBand })}
+          title="What are your monthly expenses?"
+          helper="We split spending into two parts: fixed (housing, utilities, food, school, healthcare, basic transport — things that can't be paused) and variable (travel, leisure, things you can cut quickly). Both feed the advisor's view of your total cash burn."
           onContinue={advance}
           onBack={goBack}
-        />
+        >
+          <div className="space-y-6 mt-2">
+            <div>
+              <div className="eyebrow text-[var(--text-muted)] mb-1">
+                Fixed expenses
+              </div>
+              <div className="text-[12.5px] text-[var(--text-muted)] mb-3">
+                The things you can&apos;t cut quickly.
+              </div>
+              <div className="space-y-2">
+                {spendBands.map(([id, label]) => (
+                  <button
+                    key={`fixed-${id}`}
+                    type="button"
+                    className={`card-option ${answers.spending === id ? "selected" : ""}`}
+                    onClick={() => set({ spending: id })}
+                  >
+                    <span className="text-[15px]">{label}</span>
+                    <CheckIcon />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="eyebrow text-[var(--text-muted)] mb-1">
+                Variable expenses
+              </div>
+              <div className="text-[12.5px] text-[var(--text-muted)] mb-3">
+                Travel, leisure, dining out, things you could cut next month.
+              </div>
+              <div className="space-y-2">
+                {spendBands.map(([id, label]) => (
+                  <button
+                    key={`variable-${id}`}
+                    type="button"
+                    className={`card-option ${answers.variableSpending === id ? "selected" : ""}`}
+                    onClick={() => set({ variableSpending: id })}
+                  >
+                    <span className="text-[15px]">{label}</span>
+                    <CheckIcon />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </QuestionScreen>
       );
     }
     case "q5": {

@@ -92,6 +92,7 @@ export interface AnswerSet {
   stability: Stability;
   assets: AssetsBand;
   spending: SpendBand;
+  variableSpending: SpendBand;
   horizon: HorizonItem[];
   homeTiming: HomeTiming | null;
   drawdownReaction: DrawdownReaction;
