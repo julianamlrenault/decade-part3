@@ -115,8 +115,8 @@ export default function InterviewFlow({
           progress={progress}
           stepLabel={stepLabel}
           eyebrow="A note before we start"
-          title="Three decisions matter more than stock-picking."
-          body="Over a 10-year horizon, what shapes your wealth most isn't which assets you pick. It's three sizing choices: how much you reserve for liquidity, how much you protect against inflation, and how much you diversify outside Brazil."
+          title="Three decisions matter more than your investment allocation."
+          body="Over a 10-year horizon, what shapes your wealth generation most isn't which assets you pick. It's three sizing choices: how much you reserve for liquidity, how much you protect against inflation, and how much you diversify."
           closing="We'll cover all three."
           onContinue={advance}
           onBack={goBack}
@@ -128,10 +128,10 @@ export default function InterviewFlow({
         <ContextScreen
           progress={progress}
           stepLabel={stepLabel}
-          eyebrow="Worth saying out loud"
-          title="One portfolio for many goals = goals in conflict."
-          body="Most Brazilian investors use a single allocation for objectives with very different horizons: liquidity in 6 months, a home in 3 years, retirement in 25."
-          closing="The result is predictable: either under-liquid when life happens, or under-allocated when the long term matters most."
+          eyebrow="One more point before we move on"
+          title="One portfolio for many goals means goals in conflict."
+          body="Most Brazilian investors rely on a single allocation for objectives with very different time horizons: liquidity in six months, a home purchase in three years, retirement in twenty-five."
+          closing="The outcome is predictable: either insufficient liquidity when life happens, or underinvestment when long-term objectives matter most."
           onContinue={advance}
           onBack={goBack}
         />
@@ -142,16 +142,16 @@ export default function InterviewFlow({
         <ContextScreen
           progress={progress}
           stepLabel={stepLabel}
-          eyebrow="The next one matters"
+          eyebrow="The next point matters."
           title="Brazilian equity had 8 drawdowns greater than 15% in the last 25 years."
-          body="The average investor underperformed CDI, not because the asset failed, but because the reaction did."
+          body="The average investor underperformed CDI — not because markets failed, but because behavior did."
           stats={[
             {
               number: "8x",
               caption: "drawdowns greater than 15% in Brazilian equity over 25 years.",
             },
           ]}
-          closing="The question that matters isn't 'can you handle volatility?' It's 'at what point does a drop start to mess with your sleep?'"
+          closing="The relevant question is not whether volatility can be tolerated, but when volatility becomes emotionally intolerable."
           source="Source: Anbima / Ibovespa · 1999–2024"
           onContinue={advance}
           onBack={goBack}
@@ -403,17 +403,17 @@ export default function InterviewFlow({
       const opts: OptionCard[] = (
         [
           ["decided_lt_12mo", "Decided", "Closing within 12 months"],
-          ["likely_1_3y", "Likely", "Within 1 to 3 years"],
-          ["considering_3_5y", "Considering", "3 to 5 years out"],
+          ["likely_1_3y", "Likely", "Within 1-3 years"],
+          ["considering_3_5y", "Considering", "3-5 years away"],
           ["exploring", "Exploring", "No specific timeline"],
-          ["dreaming", "Just dreaming", "More aspiration than plan"],
+          ["dreaming", "Aspirational", "More aspiration than plan"],
         ] as [HomeTiming, string, string][]
       ).map(([id, title, helper]) => ({ id, title, helper }));
       return (
         <QuestionScreen
           progress={progress}
           stepLabel={stepLabel}
-          title="On the home — when are you actually thinking?"
+          title="Your home plan — how concrete is it?"
           helper="Sizing the home bucket depends on how concrete the plan is, not just whether it exists."
           options={opts}
           selected={answers.homeTiming ?? undefined}
@@ -427,8 +427,8 @@ export default function InterviewFlow({
     case "q7": {
       const opts: OptionCard[] = (
         [
-          ["sell_all", "Sell everything immediately", "Stop the bleeding, prevent further losses"],
-          ["sell_some", "Sell some", "Lock in remaining capital"],
+          ["sell_all", "Sell everything immediately", "Cut losses, prevent further damage"],
+          ["sell_some", "Sell some", "Reduce exposure, secure what's left"],
           ["hold", "Hold and wait", "Stick with the plan, wait for recovery"],
           ["buy_more", "Buy more", "Take advantage of lower prices"],
           ["unsure", "Not sure", "I'd want to talk to someone first"],
@@ -438,7 +438,7 @@ export default function InterviewFlow({
         <QuestionScreen
           progress={progress}
           stepLabel={stepLabel}
-          title="Imagine your portfolio drops 25% over six months. Honestly — what do you do?"
+          title="Imagine your portfolio drops 25% over six months. What's your first move?"
           options={opts}
           selected={answers.drawdownReaction}
           onSelect={(id) => set({ drawdownReaction: id as DrawdownReaction })}
@@ -462,8 +462,8 @@ export default function InterviewFlow({
         <QuestionScreen
           progress={progress}
           stepLabel={stepLabel}
-          title="Have you ever lost real money on a specific product?"
-          helper="No judgement. We use it as a product filter, not a label on you."
+          title="Have you lost money on an investment that still bothers you?"
+          helper="No judgment. The answer changes the portfolio, not how we read you."
           options={opts}
           selected={answers.priorLoss}
           onSelect={(id) => set({ priorLoss: id as PriorLoss })}
@@ -476,16 +476,16 @@ export default function InterviewFlow({
       const opts: OptionCard[] = (
         [
           ["brazil_focused", "Keep it minimal", "Mostly BRL, USD only as a small hedge"],
-          ["meaningful", "Meaningful exposure", "A real USD allocation, not a token slice"],
-          ["essential", "Significant weighting", "USD as a core anchor, alongside Brazil"],
+          ["meaningful", "Meaningful exposure", "A real USD allocation, not just a sleeve"],
+          ["essential", "Significant weighting", "USD as a core position"],
         ] as [Intl, string, string][]
       ).map(([id, title, helper]) => ({ id, title, helper }));
       return (
         <QuestionScreen
           progress={progress}
           stepLabel={stepLabel}
-          title="When we build your portfolio, how much should be in USD-denominated assets?"
-          helper="Brazilian markets are heavily concentrated in commodities, banks, and a few utilities. USD assets give exposure to global tech, healthcare, and consumer companies that aren't well represented on B3."
+          title="How much of your portfolio should be in USD-denominated assets?"
+          helper="USD exposure helps hedge purchasing power against BRL volatility while providing access to innovation-driven sectors largely absent from B3 — technology, cloud, AI."
           options={opts}
           selected={answers.intl}
           onSelect={(id) => set({ intl: id as Intl })}

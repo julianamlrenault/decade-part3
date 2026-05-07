@@ -40,20 +40,20 @@ export default function IntroScreen({
             A few questions about you, then a portfolio built specifically for you.
           </h1>
           <p className="text-[15px] text-[var(--text-muted)] leading-relaxed max-w-[460px] mb-10 fade-up fade-up-3">
-            I&apos;ll ask about your goals, your financial picture, and how you actually
-            react to risk. About two minutes. Nothing here is a template.
+            I&apos;ll ask about your goals, your financial picture, and how you react
+            to risk. It will only take 2 minutes.
           </p>
 
           <div className="border border-[var(--line)] rounded-lg p-5 mb-10 fade-up fade-up-3 bg-[var(--surface-soft)]">
             <div className="eyebrow text-[var(--accent)] mb-2">
-              Confidence from clarity
+              Transparency leads to confidence
             </div>
             <p className="text-[14px] text-[var(--text)] leading-relaxed">
               Roughly{" "}
               <span className="font-semibold">3 in 10 Brazilians invest at all</span>
               &nbsp;&mdash; and most cite uncertainty, not income, as the reason they
-              don&apos;t. Confidence comes from clarity: knowing exactly why every R$
-              is where it is.
+              don&apos;t. Confidence comes from transparency: knowing exactly why every
+              R$ is where it is.
             </p>
             <div className="text-[11px] text-[var(--text-faint)] mt-3">
               Source: ANBIMA &mdash; Raio X do Investidor
