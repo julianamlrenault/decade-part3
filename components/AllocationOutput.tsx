@@ -1,7 +1,8 @@
 "use client";
 
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import type { AllocationResult, BucketId } from "../lib/types";
+import AdvisorContactCTA from "./AdvisorContactCTA";
+import type { AllocationResult, BucketId, UserInfo } from "../lib/types";
 
 const BUCKET_COLORS: Record<BucketId, string> = {
   reserve: "#6c8db5",
@@ -24,9 +25,11 @@ function formatBrl(n: number) {
 export default function AllocationOutput({
   result,
   baselineDelta,
+  userInfo,
 }: {
   result: AllocationResult;
   baselineDelta: boolean;
+  userInfo: UserInfo | null;
 }) {
   const data = result.buckets
     .filter((b) => b.pct > 0)
@@ -141,6 +144,8 @@ export default function AllocationOutput({
           </div>
         </div>
       )}
+
+      <AdvisorContactCTA result={result} userInfo={userInfo} />
     </div>
   );
 }

@@ -494,7 +494,7 @@ export default function InterviewFlow({
           ["none", "No, never"],
           ["stocks", "Yes — individual stocks"],
           ["structured", "Yes — structured products (COE, autocall)"],
-          ["crypto", "Yes — crypto / digital assets"],
+          ["crypto", "Yes — crypto"],
           ["international", "Yes — international assets"],
           ["other", "Yes — something else"],
         ] as [PriorLoss, string][]

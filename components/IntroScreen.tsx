@@ -49,7 +49,6 @@ export default function IntroScreen({
               Transparency leads to confidence
             </div>
             <p className="text-[14px] text-[var(--text)] leading-relaxed">
-              Roughly{" "}
               <span className="font-semibold">3 in 10 Brazilians invest at all</span>
               &nbsp;&mdash; and most cite uncertainty, not income, as the reason they
               don&apos;t. Confidence comes from transparency: knowing exactly why every

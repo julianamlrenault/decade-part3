@@ -52,11 +52,11 @@ const MODIFIERS: Record<string, ModifierDef> = {
   tolerance_unsure: {
     id: "tolerance_unsure",
     label: "Tolerance: unsure",
-    effect: "No allocational change. Flagged for banker review.",
+    effect: "No allocational change. Flagged for advisor review.",
     shapeDelta: ZERO,
     flag: {
       label: "Tolerance unconfirmed",
-      note: "Client said 'I'd want to talk to someone'. Default allocation used; banker should validate.",
+      note: "Client said 'I'd want to talk to someone'. Default allocation used; advisor should validate.",
     },
   },
   intl_brazil_focused: {
@@ -91,7 +91,7 @@ const MODIFIERS: Record<string, ModifierDef> = {
     shapeDelta: ZERO,
     flag: {
       label: "Discuss succession structure",
-      note: "Client signaled generational wealth as a 10-year goal. Banker should review life insurance and holding companies.",
+      note: "Client signaled generational wealth as a 10-year goal. Advisor should review life insurance and holding companies.",
     },
   },
   trauma_structured: {

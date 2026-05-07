@@ -61,7 +61,11 @@ export default function ResultsView({
 
           <div className="fade-up">
             {tab === "portfolio" && (
-              <AllocationOutput result={result} baselineDelta={baselineDelta} />
+              <AllocationOutput
+                result={result}
+                baselineDelta={baselineDelta}
+                userInfo={userInfo}
+              />
             )}
             {tab === "memo" && <MemoView result={result} userInfo={userInfo} />}
             {tab === "transition" && <TransitionView result={result} />}
