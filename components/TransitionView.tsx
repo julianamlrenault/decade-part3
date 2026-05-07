@@ -72,12 +72,6 @@ export default function TransitionView({ result }: { result: AllocationResult })
       title: "Open PGBL and finalize",
       body: `Open the ${pgblPct.toFixed(1)}% PGBL, capped by deductibility.`,
     });
-  } else if (result.filters.length > 0) {
-    stages.push({
-      day: "Day 21–30",
-      title: "Finalize",
-      body: "",
-    });
   }
 
   return (
@@ -99,11 +93,9 @@ export default function TransitionView({ result }: { result: AllocationResult })
             <span className="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-[var(--bg)] border-2 border-[var(--accent)]" />
             <div className="eyebrow text-[var(--text-muted)] mb-1.5">{s.day}</div>
             <div className="serif text-[18px] mb-1.5">{s.title}</div>
-            {s.body && (
-              <p className="text-[13.5px] text-[var(--text-muted)] leading-relaxed">
-                {s.body}
-              </p>
-            )}
+            <p className="text-[13.5px] text-[var(--text-muted)] leading-relaxed">
+              {s.body}
+            </p>
           </li>
         ))}
       </ol>
