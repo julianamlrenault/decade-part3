@@ -1,6 +1,6 @@
 "use client";
 
-import type { AllocationResult } from "../lib/types";
+import type { AllocationResult, BucketId } from "../lib/types";
 
 interface Stage {
   day: string;
@@ -9,44 +9,78 @@ interface Stage {
 }
 
 export default function TransitionView({ result }: { result: AllocationResult }) {
-  const reservePct = result.buckets.find((b) => b.id === "reserve")!.pct;
-  const homePct = result.buckets.find((b) => b.id === "home")!.pct;
-  const corePct = result.buckets.find((b) => b.id === "core")!.pct;
-  const inflPct = result.buckets.find((b) => b.id === "inflation")!.pct;
-  const growthPct = result.buckets.find((b) => b.id === "growth")!.pct;
-  const globalPct = result.buckets.find((b) => b.id === "global")!.pct;
-  const pgblPct = result.buckets.find((b) => b.id === "pgbl")!.pct;
+  const pct = (id: BucketId) =>
+    result.buckets.find((b) => b.id === id)?.pct ?? 0;
 
-  const stages: Stage[] = [
-    {
+  const reservePct = pct("reserve");
+  const homePct = pct("home");
+  const corePct = pct("core");
+  const inflPct = pct("inflation");
+  const growthPct = pct("growth");
+  const globalPct = pct("global");
+  const pgblPct = pct("pgbl");
+
+  const stages: Stage[] = [];
+
+  if (reservePct > 0) {
+    stages.push({
       day: "Day 0–3",
       title: "Free up liquidity and protect cash flow",
       body: `Carve out the ${reservePct.toFixed(1)}% Liquidity Reserve from the existing fund. CDB liquidity + DI funds. The household stops being one event away from liquidating the rest.`,
-    },
-    {
+    });
+  }
+
+  if (corePct + inflPct > 0) {
+    const parts: string[] = [];
+    if (corePct > 0) parts.push(`${corePct.toFixed(1)}% post-fixed credit`);
+    if (inflPct > 0) parts.push(`${inflPct.toFixed(1)}% IPCA-linked sovereigns`);
+    stages.push({
       day: "Day 3–7",
       title: "Stand up the long-term core",
-      body: `Move ${(corePct + inflPct).toFixed(1)}% into the income / inflation engine: post-fixed credit and IPCA-linked sovereigns. This is where compounding actually happens.`,
-    },
-    {
+      body: `Move ${(corePct + inflPct).toFixed(1)}% into the income / inflation engine: ${parts.join(" + ")}. This is where compounding actually happens.`,
+    });
+  }
+
+  if (homePct > 0) {
+    stages.push({
       day: "Day 7–14",
       title: "Earmark the home bucket",
-      body:
-        homePct > 0
-          ? `Park ${homePct.toFixed(1)}% in short-duration FI dedicated to the home decision. Sized to current commitment, not full intent.`
-          : "No home bucket this round. The pp is redeployed into the long-term engine.",
-    },
-    {
+      body: `Park ${homePct.toFixed(1)}% in short-duration FI dedicated to the home decision. Sized to current commitment, not full intent.`,
+    });
+  }
+
+  if (growthPct > 0 || globalPct > 0) {
+    const parts: string[] = [];
+    if (growthPct > 0) parts.push(`${growthPct.toFixed(1)}% growth`);
+    if (globalPct > 0) parts.push(`${globalPct.toFixed(1)}% global`);
+    const title =
+      growthPct > 0 && globalPct > 0
+        ? "Stage growth and global"
+        : growthPct > 0
+          ? "Stage growth"
+          : "Stage global";
+    stages.push({
       day: "Day 14–21",
-      title: "Stage growth and global",
-      body: `Phase in ${growthPct.toFixed(1)}% growth and ${globalPct.toFixed(1)}% global over multiple weeks rather than at once. Avoids entry concentration and lets the household feel the volatility on a small position first.`,
-    },
-    {
+      title,
+      body: `Phase in ${parts.join(" and ")} over multiple weeks rather than at once. Avoids entry concentration and lets the household feel the volatility on a small position first.`,
+    });
+  }
+
+  if (pgblPct > 0) {
+    const filtersText =
+      result.filters.length > 0 ? result.filters.join(", ") : "none active";
+    stages.push({
       day: "Day 21–30",
       title: "Open PGBL and finalize",
-      body: `Open the ${pgblPct.toFixed(1)}% PGBL, capped by deductibility. Confirm filters: ${result.filters.length > 0 ? result.filters.join(", ") : "none active"}.`,
-    },
-  ];
+      body: `Open the ${pgblPct.toFixed(1)}% PGBL, capped by deductibility. Confirm filters: ${filtersText}.`,
+    });
+  } else if (result.filters.length > 0) {
+    stages.push({
+      day: "Day 21–30",
+      title: "Finalize",
+      body: `Confirm filters before settling: ${result.filters.join(", ")}.`,
+    });
+  }
 
   return (
     <div className="space-y-6">
