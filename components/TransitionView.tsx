@@ -67,18 +67,16 @@ export default function TransitionView({ result }: { result: AllocationResult })
   }
 
   if (pgblPct > 0) {
-    const filtersText =
-      result.filters.length > 0 ? result.filters.join(", ") : "none active";
     stages.push({
       day: "Day 21–30",
       title: "Open PGBL and finalize",
-      body: `Open the ${pgblPct.toFixed(1)}% PGBL, capped by deductibility. Confirm filters: ${filtersText}.`,
+      body: `Open the ${pgblPct.toFixed(1)}% PGBL, capped by deductibility.`,
     });
   } else if (result.filters.length > 0) {
     stages.push({
       day: "Day 21–30",
       title: "Finalize",
-      body: `Confirm filters before settling: ${result.filters.join(", ")}.`,
+      body: "",
     });
   }
 
@@ -101,9 +99,11 @@ export default function TransitionView({ result }: { result: AllocationResult })
             <span className="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-[var(--bg)] border-2 border-[var(--accent)]" />
             <div className="eyebrow text-[var(--text-muted)] mb-1.5">{s.day}</div>
             <div className="serif text-[18px] mb-1.5">{s.title}</div>
-            <p className="text-[13.5px] text-[var(--text-muted)] leading-relaxed">
-              {s.body}
-            </p>
+            {s.body && (
+              <p className="text-[13.5px] text-[var(--text-muted)] leading-relaxed">
+                {s.body}
+              </p>
+            )}
           </li>
         ))}
       </ol>
