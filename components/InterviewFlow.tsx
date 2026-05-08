@@ -143,16 +143,16 @@ export default function InterviewFlow({
           progress={progress}
           stepLabel={stepLabel}
           eyebrow="The next point matters."
-          title="Brazilian equity had 8 drawdowns greater than 15% in the last 25 years."
-          body="The average investor underperformed CDI — not because markets failed, but because behavior did."
+          title="Brazilian equity fell more than 30% in 2008, 2015, and 2020."
+          body="The investor who reacted to each drawdown, underperformed the one who held through them."
           stats={[
             {
-              number: "8x",
-              caption: "drawdowns greater than 15% in Brazilian equity over 25 years.",
+              number: "3x",
+              caption: "drawdowns greater than 30% in Brazilian equity in the past two decades.",
             },
           ]}
           closing="The relevant question is not whether volatility can be tolerated, but when volatility becomes emotionally intolerable."
-          source="Source: Anbima / Ibovespa · 1999–2024"
+          source="Source: B3 Ibovespa historical data"
           onContinue={advance}
           onBack={goBack}
         />

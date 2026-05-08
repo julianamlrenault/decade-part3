@@ -162,7 +162,7 @@ export const INFO_SCREENS: Record<string, { title: string; body: string }> = {
     body: "Most Brazilian investors use a single allocation for objectives with very different horizons: liquidity in 6 months, a home in 3 years, retirement in 25. The result is predictable: either under-liquid when life happens, or under-allocated when long-term matters most.",
   },
   before_q7: {
-    title: "Brazilian equity had 8 drawdowns greater than 15% in the last 25 years",
+    title: "Brazilian equity fell more than 30% in 2008, 2015, and 2020",
     body: "The average investor underperformed CDI, not because the asset failed, but because the reaction did. The question that matters is not 'can you handle volatility?' it is 'at what point does a drop start to mess with your sleep?'",
   },
 };
