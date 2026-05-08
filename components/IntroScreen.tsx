@@ -49,13 +49,14 @@ export default function IntroScreen({
               Transparency leads to confidence
             </div>
             <p className="text-[14px] text-[var(--text)] leading-relaxed">
-              <span className="font-semibold">3 in 10 Brazilians invest at all</span>
-              &nbsp;&mdash; and most cite uncertainty, not income, as the reason they
-              don&apos;t. Confidence comes from transparency: knowing exactly why every
-              R$ is where it is.
+              <span className="font-semibold">
+                Only 4 in 10 Brazilians invest. Most stop at the savings account.
+              </span>{" "}
+              Confidence comes from transparency: knowing exactly why every R$ is
+              where it is.
             </p>
             <div className="text-[11px] text-[var(--text-faint)] mt-3">
-              Source: ANBIMA &mdash; Raio X do Investidor
+              Source: ANBIMA Raio-X do Investidor Brasileiro, 2024
             </div>
           </div>
 
